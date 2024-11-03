@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:calculator_bo6/const/text_const.dart';
 import 'package:calculator_bo6/controller/calculator.dart';
 import 'package:calculator_bo6/data/photo_with_value.dart';
@@ -5,6 +7,8 @@ import 'package:calculator_bo6/model/photo_with_value.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,6 +23,35 @@ class _HomePageState extends State<HomePage> {
   final Calculator calculator = Calculator();
   String? selectedVariable;
   PhotoWithValue? selectedPhoto;
+  String? backgroundImagePath;
+
+  @override
+  void initState() {
+    super.initState();
+    loadbackgroundImage();
+  }
+
+  Future<void> loadbackgroundImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      backgroundImagePath =
+          prefs.getString("backgroundImagePath") ?? "assets/images/gura.jpg";
+    });
+  }
+
+  Future<void> pickBackgroundImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString("backgroundImagePath", pickedFile.path);
+
+      setState(() {
+        backgroundImagePath = pickedFile.path;
+      });
+    }
+  }
 
   void showPhotoSeletor(String variable) {
     showModalBottomSheet(
@@ -82,10 +115,16 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: [
           Positioned.fill(
-              child: Image.asset(
-            "assets/images/gura.jpg",
-            fit: BoxFit.cover,
-          )),
+            child: backgroundImagePath != null
+                ? Image.file(
+                    File(backgroundImagePath!),
+                    fit: BoxFit.fill,
+                  )
+                : Image.asset(
+                    "assets/images/gura.jpg",
+                    fit: BoxFit.fill,
+                  ),
+          ),
           SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,6 +137,14 @@ class _HomePageState extends State<HomePage> {
                         "Calculadora Terminus BO6",
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: title.sp),
+                      ),
+                      IconButton(
+                        onPressed: pickBackgroundImage,
+                        icon: Icon(
+                          Icons.image,
+                          size: 20.sp,
+                        ),
+                        tooltip: "Foto de Fundo",
                       ),
                       GestureDetector(
                           onTap: () {
@@ -141,7 +188,8 @@ class _HomePageState extends State<HomePage> {
                         onPressed: clearValues,
                         child: Text(
                           "Limpar",
-                          style: TextStyle(fontSize: lable.sp, color: textColor),
+                          style:
+                              TextStyle(fontSize: lable.sp, color: textColor),
                         ),
                         // style: ElevatedButton.styleFrom(fixedSize: Size(30.w, 20.h)),
                       ),
