@@ -1,3 +1,4 @@
+import 'package:calculator_bo6/const/text_const.dart';
 import 'package:calculator_bo6/controller/calculator.dart';
 import 'package:calculator_bo6/data/photo_with_value.dart';
 import 'package:calculator_bo6/model/photo_with_value.dart';
@@ -96,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         "Calculadora Terminus BO6",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 40.sp),
+                        style: TextStyle(fontSize: title.sp),
                       ),
                       GestureDetector(
                           onTap: () {
@@ -104,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                           },
                           child: Text(
                             "Tap to Select X : ${calculator.x ?? ''}",
-                            style: TextStyle(fontSize: 30.sp),
+                            style: TextStyle(fontSize: body.sp),
                           )),
                       GestureDetector(
                         onTap: () {
@@ -112,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                         },
                         child: Text(
                           "Tap to Select Y : ${calculator.y ?? ''}",
-                          style: TextStyle(fontSize: 30.sp),
+                          style: TextStyle(fontSize: body.sp),
                         ),
                       ),
                       GestureDetector(
@@ -121,26 +122,26 @@ class _HomePageState extends State<HomePage> {
                         },
                         child: Text(
                           "Tap to Select Z : ${calculator.z ?? ''}",
-                          style: TextStyle(fontSize: 30.sp),
+                          style: TextStyle(fontSize: body.sp),
                         ),
                       ),
                       Text(
                         "1 = ${calculator.calculateFirstFormula()}",
-                        style: TextStyle(fontSize: 30.sp),
+                        style: TextStyle(fontSize: body.sp),
                       ),
                       Text(
                         "2 = ${calculator.calculateSecondFormula()}",
-                        style: TextStyle(fontSize: 30.sp),
+                        style: TextStyle(fontSize: body.sp),
                       ),
                       Text(
                         "3 = ${calculator.calculateThirdFormula()}",
-                        style: TextStyle(fontSize: 30.sp),
+                        style: TextStyle(fontSize: body.sp),
                       ),
                       ElevatedButton(
                         onPressed: clearValues,
                         child: Text(
                           "Limpar",
-                          style: TextStyle(fontSize: 20.sp, color: Colors.black),
+                          style: TextStyle(fontSize: lable.sp, color: textColor),
                         ),
                         // style: ElevatedButton.styleFrom(fixedSize: Size(30.w, 20.h)),
                       ),
