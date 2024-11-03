@@ -34,8 +34,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> loadbackgroundImage() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      backgroundImagePath =
-          prefs.getString("backgroundImagePath") ?? "assets/images/gura.jpg";
+      backgroundImagePath = prefs.getString("backgroundImagePath") ?? "assets/images/gura.jpg";
     });
   }
 
@@ -188,8 +187,7 @@ class _HomePageState extends State<HomePage> {
                         onPressed: clearValues,
                         child: Text(
                           "Limpar",
-                          style:
-                              TextStyle(fontSize: lable.sp, color: textColor),
+                          style: TextStyle(fontSize: lable.sp, color: textColor),
                         ),
                         // style: ElevatedButton.styleFrom(fixedSize: Size(30.w, 20.h)),
                       ),
