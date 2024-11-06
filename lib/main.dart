@@ -1,4 +1,5 @@
 import 'package:calculator_bo6/view/home_page.dart';
+import 'package:calculator_bo6/view/theme/my_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -12,12 +13,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const ScreenUtilInit(
-      designSize: Size(300, 600),
+    return ScreenUtilInit(
+      designSize: Size(
+        MediaQuery.of(context).size.width,
+        MediaQuery.of(context).size.height,
+      ),
       minTextAdapt: true,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: HomePage(),
+      builder: (context, child) => MaterialApp(
+        home: const HomePage(),
+        theme: myTheme,
       ),
     );
   }
