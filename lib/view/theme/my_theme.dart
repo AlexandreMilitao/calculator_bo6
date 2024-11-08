@@ -19,12 +19,12 @@ ThemeData myTheme = ThemeData(
 
 TextTheme textTheme = TextTheme(
   titleLarge: TextStyle(
-    fontSize: 30.sp,
+    fontSize: 50.sp,
     color: Colors.black,
     fontWeight: FontWeight.bold,
   ),
   bodyLarge: TextStyle(
-    fontSize: 20.sp,
+    fontSize: 30.sp,
     color: Colors.black,
     fontWeight: FontWeight.bold,
   ),

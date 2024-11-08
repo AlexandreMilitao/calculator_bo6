@@ -45,11 +45,11 @@ class _HomePageState extends State<HomePage> {
                   () {
                     selectedPhoto = photoWithValue;
                     if (variable == "x") {
-                      calculator.x = photoWithValue.value;
+                      calculator.vM.x = photoWithValue.value;
                     } else if (variable == "y") {
-                      calculator.y = photoWithValue.value;
+                      calculator.vM.y = photoWithValue.value;
                     } else {
-                      calculator.z = photoWithValue.value;
+                      calculator.vM.z = photoWithValue.value;
                     }
                   },
                 );
@@ -71,14 +71,13 @@ class _HomePageState extends State<HomePage> {
 
   void clearValues() {
     setState(() {
-      calculator.x = null;
-      calculator.y = null;
-      calculator.z = null;
+      calculator.clearValues();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).textTheme;
     if (kDebugMode) {
       WakelockPlus.enable();
     }
@@ -103,7 +102,8 @@ class _HomePageState extends State<HomePage> {
                         "Calculadora Terminus BO6",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: Theme.of(context).textTheme.titleLarge?.fontSize,
+                          fontSize: theme.displayLarge?.fontSize,
+                          color: theme.titleLarge?.color,
                         ),
                       ),
                       GestureDetector(
@@ -111,10 +111,10 @@ class _HomePageState extends State<HomePage> {
                           showPhotoSeletor("x");
                         },
                         child: Text(
-                          "Tap to Select X : ${calculator.x ?? ''}",
+                          "Tap to Select X = ${calculator.vM.x}",
                           style: TextStyle(
-                            fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
-                            color: Theme.of(context).textTheme.bodyLarge?.color,
+                            fontSize: theme.bodyLarge?.fontSize,
+                            color: theme.bodyLarge?.color,
                           ),
                         ),
                       ),
@@ -123,11 +123,11 @@ class _HomePageState extends State<HomePage> {
                           showPhotoSeletor("y");
                         },
                         child: Text(
-                          "Tap to Select Y : ${calculator.y ?? ''}",
+                          "Tap to Select Y = ${calculator.vM.y}",
                           textAlign: TextAlign.start,
                           style: TextStyle(
-                            fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
-                            color: Theme.of(context).textTheme.bodyLarge?.color,
+                            fontSize: theme.bodyLarge?.fontSize,
+                            color: theme.bodyLarge?.color,
                           ),
                         ),
                       ),
@@ -136,45 +136,60 @@ class _HomePageState extends State<HomePage> {
                           showPhotoSeletor("z");
                         },
                         child: Text(
-                          "Tap to Select Z : ${calculator.z ?? ''}",
+                          "Tap to Select Z = ${calculator.vM.z}",
                           textAlign: TextAlign.start,
                           style: TextStyle(
-                            fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
-                            color: Theme.of(context).textTheme.bodyLarge?.color,
+                            fontSize: theme.bodyLarge?.fontSize,
+                            color: theme.bodyLarge?.color,
                           ),
                         ),
                       ),
                       Text(
-                        "1 = ${calculator.calculateFirstFormula()}",
+                        "1 = ${calculator.vM.res1}",
                         style: TextStyle(
-                          fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
-                          color: Theme.of(context).textTheme.bodyLarge?.color,
+                          fontSize: theme.bodyLarge?.fontSize,
+                          color: theme.bodyLarge?.color,
                         ),
                       ),
                       Text(
-                        "2 = ${calculator.calculateSecondFormula()}",
+                        "2 = ${calculator.vM.res2}",
                         style: TextStyle(
-                          fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
-                          color: Theme.of(context).textTheme.bodyLarge?.color,
+                          fontSize: theme.bodyLarge?.fontSize,
+                          color: theme.bodyLarge?.color,
                         ),
                       ),
                       Text(
-                        "3 = ${calculator.calculateThirdFormula()}",
+                        "3 = ${calculator.vM.res3}",
                         style: TextStyle(
-                          fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
-                          color: Theme.of(context).textTheme.bodyLarge?.color,
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: clearValues,
-                        child: Text(
-                          "Limpar",
-                          style: TextStyle(
-                            color: Theme.of(context).textTheme.bodyLarge?.color,
-                          ),
+                          fontSize: theme.bodyLarge?.fontSize,
+                          color: theme.bodyLarge?.color,
                         ),
                       ),
                     ],
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      calculator.calculateAll();
+                    });
+                  },
+                  child: Text(
+                    "Calcular",
+                    style: TextStyle(
+                      color: theme.bodyLarge?.color,
+                      fontSize: theme.bodyLarge?.fontSize,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: clearValues,
+                  child: Text(
+                    "Limpar",
+                    style: TextStyle(
+                      color: theme.bodyLarge?.color,
+                      fontSize: theme.bodyLarge?.fontSize,
+                    ),
                   ),
                 ),
                 Image.asset(
